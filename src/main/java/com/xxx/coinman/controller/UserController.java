@@ -1,4 +1,4 @@
-package com.xxx.coinman.web;
+package com.xxx.coinman.controller;
 
 import com.xxx.coinman.model.User;
 import com.xxx.coinman.service.SecurityService;
