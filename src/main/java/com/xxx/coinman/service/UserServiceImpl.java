@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
         //Role guest
         Role guest = roleRepository.findOne(2L);
         Set roles = new HashSet<>();
-        roles.add(roles);
+        roles.add(guest);
         user.setRoles(roles);//Guest
         userRepository.save(user);
     }
