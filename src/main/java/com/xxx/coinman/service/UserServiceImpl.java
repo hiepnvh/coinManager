@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,9 +26,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         //Role guest
         Role guest = roleRepository.findOne(2L);
-        Set roles = new HashSet<>();
-        roles.add(guest);
-        user.setRoles(roles);//Guest
+        user.setRoles(new HashSet<>(Arrays.asList(guest)));//Guest
         userRepository.save(user);
     }
 
