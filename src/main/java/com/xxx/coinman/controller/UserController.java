@@ -1,16 +1,21 @@
 package com.xxx.coinman.controller;
 
+import com.xxx.coinman.model.Role;
 import com.xxx.coinman.model.User;
+import com.xxx.coinman.repository.RoleRepository;
 import com.xxx.coinman.service.SecurityService;
 import com.xxx.coinman.service.UserService;
 import com.xxx.coinman.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class UserController {
@@ -22,6 +27,9 @@ public class UserController {
 
     @Autowired
     private UserValidator userValidator;
+    
+    @Autowired
+    private RoleRepository roleRepository;
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
@@ -56,8 +64,28 @@ public class UserController {
         return "login";
     }
 
-    @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
-    public String welcome(Model model) {
-        return "welcome";
-    }
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+	public ModelAndView index() {
+		User user = getCurrentUser();
+		ModelAndView modelAndView = new ModelAndView();
+		if (user != null) {
+			Role userRole = roleRepository.findOne(1L);
+			if(user.getRoles().contains(userRole)){
+				modelAndView.setViewName("resources/admin/index");
+			}else{
+				modelAndView.setViewName("welcome");
+			}
+			modelAndView.addObject("currentUser", user);
+			
+		} else {
+			modelAndView.setViewName("login");
+		}
+		return modelAndView;
+	}
+    
+    protected User getCurrentUser() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findByUsername(auth.getName());
+		return user;
+	}
 }

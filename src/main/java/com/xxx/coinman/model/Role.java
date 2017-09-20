@@ -3,11 +3,14 @@ package com.xxx.coinman.model;
 import javax.persistence.*;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "role")
 public class Role {
 	@Id

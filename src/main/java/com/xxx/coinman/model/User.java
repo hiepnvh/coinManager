@@ -2,11 +2,16 @@ package com.xxx.coinman.model;
 
 import javax.persistence.*;
 
-import lombok.Data;
+import org.hibernate.validator.constraints.Email;
+
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "user")
 public class User {
 	@Id
@@ -19,6 +24,9 @@ public class User {
     
     @Transient
     private String passwordConfirm;
+    
+    @Email
+    private String email;
     
     @ManyToMany
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
