@@ -2,6 +2,7 @@ package com.xxx.coinman.model;
 
 import javax.persistence.*;
 
+import lombok.Builder.Default;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,15 +18,25 @@ public class CoinBot {
     
     private String coinCode;
     
-    private Double volume = 0.0;
+    @Column(columnDefinition="double default '0.0'")
+    private Double volume ;
     
-    private int intervalTime = 0;
+    @Column(columnDefinition ="int(11) default 0")
+    private int intervalTime ;
    
     private String platform;
     
-    private int sellLimit = 0;
+    @Column(columnDefinition ="int(11) default '0'")
+    private int sellLimit ;
     
-    private int buyLimit = 0;
+    @Column(columnDefinition ="int(11) default '0'")
+    private int buyLimit ;
+    
+    @Column(columnDefinition="double default '0.0'")
+    private Double firstPrice;
+    
+    @Column(columnDefinition="boolean default '1'")
+    private boolean active;
     
     @ManyToOne
     @JoinColumn(name = "userId")
