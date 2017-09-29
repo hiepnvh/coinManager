@@ -22,6 +22,7 @@ app.controller('AppCtrl', function($scope, $http) {
     	$scope.currCB = {};
     	$scope.showCBDetail = false;
     	$scope.loadAllCoinBots();
+    	$('.ccc-chart').remove();
     }
     
     $scope.saveCB = function(currCB){

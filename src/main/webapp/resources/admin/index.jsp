@@ -47,7 +47,7 @@
 				<th>Coin</th>
 		        <th>Volume</th>
 		        <th>Profit/Loss</th>
-				<tr ng-repeat="cb in coinbots" ng-click="showCBDetailFunc(cb)">
+				<tr class="cbRow" ng-repeat="cb in coinbots" ng-click="showCBDetailFunc(cb)" onclick="changeText()">
 					
 				    <td>{{ cb.coinCode }}</td>
 				    <td>{{ cb.volume }}</td>
@@ -59,7 +59,7 @@
 		<!--  cb list -->
 		
 		<!-- cb detail -->
-		<div ng-if="showCBDetail">
+		<div class="CBDetail" ng-if="showCBDetail">
 			<h4>Coin Bot Detail</h4>
 			<form class="form-group">
 				<label>Coin code</label>
@@ -83,8 +83,45 @@
 			<button type="button" class="btn" ng-click="showCBList()">Back to List</button>
 		</div>
 		<!-- cb detail -->
+		<label ng-if="showCBDetail">Chart for 1 month...</label>
+		
 	</div>
-
+	<script type="text/javascript">
+	function getScope(ctrlName) {
+	    var sel = 'div[ng-controller="' + ctrlName + '"]';
+	    return angular.element(sel).scope();
+	}
+	
+	var baseUrl = "https://widgets.cryptocompare.com/";
+	var scripts = document.getElementsByTagName("script");
+	var embedder = scripts[ scripts.length - 1 ];
+	
+	
+	function changeText() {
+		setTimeout(addChart, 1);
+	}   
+	
+	function addChart(){
+		var $scope = getScope('AppCtrl');
+	    var currCoinCode = $scope.currCB.coinCode;
+	    console.log(currCoinCode);
+	    var appName = encodeURIComponent(window.location.hostname);
+		if(appName==""){appName="local";}
+		var s = document.createElement("script");
+		s.type = "text/javascript";
+		s.async = true;
+		var theUrl = baseUrl+'serve/v1/coin/chart?fsym=' + currCoinCode + '&tsym=BTC&period=1M';
+		s.src = theUrl + ( theUrl.indexOf("?") >= 0 ? "&" : "?") + "app=" + appName;
+		
+		console.log(embedder.parentNode);
+		embedder.parentNode.appendChild(s);
+		
+	    $scope.$apply();
+	}
+	
+	
+	
+			</script>
 </div>
 <!-- /container -->
 
