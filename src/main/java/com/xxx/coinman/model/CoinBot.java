@@ -2,6 +2,8 @@ package com.xxx.coinman.model;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Builder.Default;
 import lombok.Data;
 import lombok.Getter;
@@ -39,6 +41,7 @@ public class CoinBot {
     private boolean active;
     
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "userId")
     private User user;
 }

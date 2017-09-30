@@ -7,9 +7,9 @@ app.controller('AppCtrl', function($scope, $http) {
     $scope.currCB = {};
 
     $scope.loadAllCoinBots = function(){
-    	$http.get("coinbots")
+    	$http.get("coinbots/search")
         .then(function(response) {
-        	$scope.coinbots =  response.data._embedded.coinbots;
+        	$scope.coinbots =  response.data;
         });
     }
     
@@ -27,7 +27,7 @@ app.controller('AppCtrl', function($scope, $http) {
     
     $scope.saveCB = function(currCB){
     	console.log(currCB);
-    	var url = '/coinbots';
+    	var url = '/coinbots/save';
     	
     	$http.post(url, currCB)
     	.then(function(response) {
