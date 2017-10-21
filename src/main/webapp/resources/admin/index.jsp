@@ -72,8 +72,10 @@
 				<input class="form-control" type="text" ng-model="currCB.sellLimit" >
 				<label>Buy limit</label>
 				<input class="form-control" type="text" ng-model="currCB.buyLimit" >
-				<label>Interval time</label>
-				<input class="form-control" type="text" ng-model="currCB.intervalTime" >
+				<label>Account name</label>
+				<input class="form-control" type="text" ng-model="currCB.accountName" >
+				<label>Account password</label>
+				<input class="form-control" type="text" ng-model="currCB.accountPassword" >
 				<label class="switch">
 				  <input type="checkbox" ng-model="currCB.active">
 				  <span class="slider"></span>
