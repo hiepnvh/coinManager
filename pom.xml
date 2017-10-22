@@ -99,11 +99,7 @@
 		   <groupId>org.json</groupId>
 		   <artifactId>json</artifactId>
 		   </dependency>
-		
-		<dependency>
-		    <groupId>org.hibernate</groupId>
-		    <artifactId>hibernate-envers</artifactId>
-		</dependency>
+
 
 	</dependencies>
 
