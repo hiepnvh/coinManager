@@ -51,7 +51,7 @@
 					
 				    <td>{{ cb.coinCode }}</td>
 				    <td>{{ cb.volume }}</td>
-				    <td>500</td>
+				    <td>{{ cb.currPrice*100/ cb.firstPrice}}%</td>
 				</tr>
 			</table>
 			<button type="button" class="btn" ng-click="showCBDetailFunc()">Add</button>
