@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -24,6 +26,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "coinbot")
+@Audited
 @EntityListeners(AuditingEntityListener.class)
 public class CoinBot {
     @Id
@@ -59,12 +62,13 @@ public class CoinBot {
     
     private String accountPassword;
     
-    @Column(columnDefinition="boolean default '0'")
-    private Boolean isBought;
+    @Column(columnDefinition="boolean default '0'", nullable = false)
+    private Boolean isBought = false;
     
-    @Column(columnDefinition="boolean default '1'")
-    private Boolean active;
+    @Column(columnDefinition="boolean default '1'", nullable = false)
+    private Boolean active = true;
     
+    @NotAudited
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "userId")

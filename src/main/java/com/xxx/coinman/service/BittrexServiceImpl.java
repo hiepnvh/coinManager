@@ -34,9 +34,9 @@ public class BittrexServiceImpl implements BittrexService {
 		if(jObj.get("success").toString().equals("true")){
 			JSONArray resArr = (JSONArray) jObj.get("result");
 			JSONObject res = (JSONObject) resArr.get(0);
-			String high = res.getString("High");
-			String low = res.getString("Low");
-			average = (Double.parseDouble(low) + Double.parseDouble(high))/2;
+			Double high = res.getDouble("High");
+			Double low = res.getDouble("Low");
+			average = (low + high)/2;
 		}
 		
 		return average;
