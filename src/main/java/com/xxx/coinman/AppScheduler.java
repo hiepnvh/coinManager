@@ -45,13 +45,15 @@ public class AppScheduler {
 				cb.setFirstPrice(currPrice);
 				cb.setLastPrice(currPrice);
 				cb.setLastPriceGot(currPrice);
+				cb.setIsBought(true);
 			}else if(currPrice*(1 - limitBuy) > lastPriceGot //raising
 				&& currPrice*(1 + limitBuy) < lastPrice 
 				&& !isBought	){
 				//buy then save new lastPrice
-				cb.setVolume(currVolume*lastPrice/currPrice);//cap nhat khoi luong da mua
+				cb.setVolume(round(currVolume*lastPrice/currPrice, 2));//cap nhat khoi luong sau khi da mua/ban
 				cb.setLastPrice(currPrice);
 				cb.setLastPriceGot(currPrice);
+				cb.setIsBought(true);
 				
 			}else if(currPrice*(1 + limitSell) < lastPriceGot //losing 
 					&& currPrice*(1 + limitSell) < lastPrice 
@@ -59,6 +61,8 @@ public class AppScheduler {
 				//sell then save new lastprrice
 				cb.setLastPrice(currPrice);
 				cb.setLastPriceGot(currPrice);
+				cb.setVolume(round(currVolume*lastPrice/currPrice, 2));//cap nhat khoi luong sau khi da mua/ban
+				cb.setIsBought(false);
 			}else{
 				//save last got price
 				cb.setLastPriceGot(currPrice);
@@ -70,6 +74,15 @@ public class AppScheduler {
 		}
 		
 		System.out.println("test abc def");
+	}
+	
+	public static double round(double value, int places) {
+	    if (places < 0) throw new IllegalArgumentException();
+
+	    long factor = (long) Math.pow(10, places);
+	    value = value * factor;
+	    long tmp = Math.round(value);
+	    return (double) tmp / factor;
 	}
 
 }

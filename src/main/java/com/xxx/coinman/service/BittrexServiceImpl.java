@@ -36,7 +36,7 @@ public class BittrexServiceImpl implements BittrexService {
 			JSONObject res = (JSONObject) resArr.get(0);
 			Double high = res.getDouble("High");
 			Double low = res.getDouble("Low");
-			average = (low + high)/2;
+			average = round((low + high)/2, 4);
 		}
 		
 		return average;
@@ -50,5 +50,14 @@ public class BittrexServiceImpl implements BittrexService {
 	@Override
 	public String sell(String coinCode, String refCode){
 		return "";
+	}
+	
+	public static double round(double value, int places) {
+	    if (places < 0) throw new IllegalArgumentException();
+
+	    long factor = (long) Math.pow(10, places);
+	    value = value * factor;
+	    long tmp = Math.round(value);
+	    return (double) tmp / factor;
 	}
 }

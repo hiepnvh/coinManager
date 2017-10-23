@@ -51,5 +51,9 @@ app.controller('AppCtrl', function($scope, $http) {
 //    	});
     }
     
+    $scope.round = function(num){
+    	return Math.round(num * 100) / 100;
+    }
+    
     $scope.loadAllCoinBots();
 });
