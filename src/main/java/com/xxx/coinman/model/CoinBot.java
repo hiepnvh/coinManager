@@ -70,6 +70,8 @@ public class CoinBot {
     @Column(columnDefinition="boolean default '0'", nullable = false)
     private Boolean isBought = false;
     
+    private String action;
+    
     @Column(columnDefinition="boolean default '1'", nullable = false)
     private Boolean active = true;
     

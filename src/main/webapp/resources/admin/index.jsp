@@ -51,7 +51,7 @@
 					
 				    <td>{{ cb.coinCode }}</td>
 				    <td>{{ cb.volume }}</td>
-				    <td>{{ round(cb.volume*100/ cb.firstVolume - 100)}}%</td>
+				    <td>{{ round((cb.volume*cb.lastPrice)*100/ (cb.firstVolume*cb.firstPrice) - 100)}}%</td>
 				</tr>
 			</table>
 			<button type="button" class="btn" ng-click="showCBDetailFunc()">Add</button>
@@ -66,7 +66,7 @@
 				<label>Coin code</label>
 				<input class="form-control" type="text" ng-model="currCB.coinCode" >
 				<label>Platform</label>
-				<input class="form-control" type="text" ng-model="currCB.platform" >
+				<input class="form-control" type="text" ng-model="currCB.platform" ng-disabled="true">
 				<label>Volume</label>
 				<input class="form-control" type="text" ng-model="currCB.volume" >
 				<label>Sell limit</label>
@@ -74,9 +74,9 @@
 				<label>Buy limit</label>
 				<input class="form-control" type="text" ng-model="currCB.buyLimit" >
 				<label>Account name</label>
-				<input class="form-control" type="text" ng-model="currCB.accountName" >
+				<input class="form-control" type="text" ng-model="currCB.accountName" ng-disabled="true">
 				<label>Account password</label>
-				<input class="form-control" type="text" ng-model="currCB.accountPassword" >
+				<input class="form-control" type="text" ng-model="currCB.accountPassword" ng-disabled="true">
 				<label class="switch">
 				  <input type="checkbox" ng-model="currCB.active">
 				  <span class="slider"></span>
@@ -101,7 +101,7 @@
 		        <th>Volume</th>
 		        <th>Price</th>
 		        <th>Date</th>
-				<tr class="cbRow" ng-repeat="log in logs">
+				<tr class="cbRow" ng-repeat="log in logs" ng-if="log.action">
 					
 				    <td>{{ log.isBought==true?'Buy':'Sell' }}</td>
 				    <td>{{ log.volume }}</td>
