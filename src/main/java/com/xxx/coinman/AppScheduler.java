@@ -20,7 +20,7 @@ public class AppScheduler {
 	private CoinBotRepository coinBotRepo;
 	
 	@Scheduled(fixedRate = 5*60*1000)
-	//run every 2 mins
+	//run every 5 mins
 	public void getAndTrade() throws Exception{
 		String refCode = "BTC"; //chi quy doi ra btc de tinh
 		List<CoinBot> coinBots = coinBotRepo.findByActive(true);
@@ -43,6 +43,7 @@ public class AppScheduler {
 			if(cb.getFirstPrice() == null){
 				//buy then save new lastprice/firstprice...
 				cb.setFirstPrice(currPrice);
+				cb.setFirstVolume(currVolume);
 				cb.setLastPrice(currPrice);
 				cb.setLastPriceGot(currPrice);
 				cb.setIsBought(true);
@@ -50,7 +51,7 @@ public class AppScheduler {
 				&& currPrice*(1 + limitBuy) < lastPrice 
 				&& !isBought	){
 				//buy then save new lastPrice
-				cb.setVolume(round(currVolume*lastPrice/currPrice, 2));//cap nhat khoi luong sau khi da mua/ban
+				cb.setVolume(round(currVolume*99.75*lastPrice/currPrice, 2));//cap nhat khoi luong sau khi da mua/ban
 				cb.setLastPrice(currPrice);
 				cb.setLastPriceGot(currPrice);
 				cb.setIsBought(true);
@@ -61,7 +62,7 @@ public class AppScheduler {
 				//sell then save new lastprrice
 				cb.setLastPrice(currPrice);
 				cb.setLastPriceGot(currPrice);
-				cb.setVolume(round(currVolume*lastPrice/currPrice, 2));//cap nhat khoi luong sau khi da mua/ban
+				cb.setVolume(round(currVolume*99.75*lastPrice/currPrice, 2));//cap nhat khoi luong sau khi da mua/ban
 				cb.setIsBought(false);
 			}else{
 				//save last got price

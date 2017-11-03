@@ -35,13 +35,13 @@
         </form>
 
         <h4 class="userNav">Welcome ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a></h4>
-        <h3 class="page-title">Guest</h3>
+        <h3 class="page-title">Coin Manager</h3>
     </c:if>
     </div>
     
     <div class="main-container" ng-app="coinman" ng-controller="AppCtrl">
 		<!-- cb list -->
-		<div ng-if="!showCBDetail">
+		<div ng-if="showCBList">
 			<h4>Coin Bot List</h4>
 			<table class="table">
 				<th>Coin</th>
@@ -51,10 +51,11 @@
 					
 				    <td>{{ cb.coinCode }}</td>
 				    <td>{{ cb.volume }}</td>
-				    <td>{{ 100 - round(cb.lastPrice*100/ cb.firstPrice)}}%</td>
+				    <td>{{ round(cb.volume*100/ cb.firstVolume - 100)}}%</td>
 				</tr>
 			</table>
 			<button type="button" class="btn" ng-click="showCBDetailFunc()">Add</button>
+			<button type="button" class="btn" ng-click="showLogFunc()">Log</button>
 		</div>
 		<!--  cb list -->
 		
@@ -82,10 +83,35 @@
 				</label>
 			</form>
 			<button type="button" class="btn" ng-click="saveCB(currCB)">Save</button>
-			<button type="button" class="btn" ng-click="showCBList()">Back to List</button>
+			<button type="button" class="btn" ng-click="showCBListFunc()">Back to List</button>
 		</div>
 		<!-- cb detail -->
 		<label ng-if="showCBDetail">Chart for 1 month...</label>
+		
+		<!-- log -->
+		<div ng-if="showLog">
+		<h4>Log for: {{cbSelect.coinCode}}</h4>
+			<br>
+			<select ng-model="cbSelect" ng-options="cb.coinCode for cb in coinbots" ng-change="viewLog(cbSelect)">
+				<option value="">Select coin Code to see log</option>
+			</select>
+			<br>
+			<table class="table">
+				<th>Buy/Sell</th>
+		        <th>Volume</th>
+		        <th>Price</th>
+		        <th>Date</th>
+				<tr class="cbRow" ng-repeat="log in logs">
+					
+				    <td>{{ log.isBought==true?'Buy':'Sell' }}</td>
+				    <td>{{ log.volume }}</td>
+				    <td>{{ log.lastPrice}}</td>
+				    <td>{{log.lastModDate}}</td>
+				</tr>
+			</table>
+			<button type="button" class="btn" ng-click="showCBListFunc()">Back to List</button>
+		</div>
+		<!-- log -->
 		
 	</div>
 	<script type="text/javascript">

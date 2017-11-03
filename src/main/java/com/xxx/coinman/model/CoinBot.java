@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
@@ -34,6 +36,9 @@ public class CoinBot {
     private Long id;
     
     private String coinCode;
+    
+    @Column(columnDefinition="double default '0.0'")
+    private Double firstVolume ;
     
     @Column(columnDefinition="double default '0.0'")
     private Double volume ;
@@ -75,6 +80,7 @@ public class CoinBot {
     private User user;
     
     @LastModifiedDate
+    @Temporal(TemporalType.DATE)
     private Date lastModDate;
 
 }

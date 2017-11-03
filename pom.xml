@@ -108,10 +108,15 @@
 	</dependencies>
 	
 	<build>
+		<finalName>coinman</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<outputDirectory>E:\BuiltPrjs</outputDirectory>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

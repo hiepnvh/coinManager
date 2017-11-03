@@ -4,6 +4,8 @@ app.controller('AppCtrl', function($scope, $http) {
     $scope.lastName = "Doe";
     $scope.coinbots = [];
     $scope.showCBDetail = false;
+    $scope.showCBList = true;
+    $scope.showLog = false;
     $scope.currCB = {};
 
     $scope.loadAllCoinBots = function(){
@@ -16,18 +18,28 @@ app.controller('AppCtrl', function($scope, $http) {
     $scope.showCBDetailFunc = function(cb){
     	$scope.currCB = cb;
     	$scope.showCBDetail = true;
+    	$scope.showCBList = false;
+    	$scope.showLog = false;
     }
     
-    $scope.showCBList = function(){
+    $scope.showLogFunc = function(){
+    	$scope.showLog = true;
+    	$scope.showCBDetail = false;
+    	$scope.showCBList = false;
+    }
+    
+    $scope.showCBListFunc = function(){
     	$scope.currCB = {};
     	$scope.showCBDetail = false;
+    	$scope.showCBList = true;
+    	$scope.showLog = false;
     	$scope.loadAllCoinBots();
     	$('.ccc-chart').remove();
     }
     
     $scope.saveCB = function(currCB){
-    	console.log(currCB);
-    	var url = '/coinbots/save';
+//    	console.log(currCB);
+    	var url = 'coinbots/save';
     	
     	$http.post(url, currCB)
     	.then(function(response) {
@@ -49,6 +61,18 @@ app.controller('AppCtrl', function($scope, $http) {
 //    	    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 //    	    data: currCB
 //    	});
+    }
+    
+    $scope.viewLog = function(cb){
+    	if(cb != null){
+    		var url = "coinbots/viewlog?coincode=" + cb.coinCode;
+        	$http.get(url)
+        	.then(function(response) {
+    			console.log(response.data);
+    			$scope.logs = response.data;
+            });
+    	}
+    	
     }
     
     $scope.round = function(num){

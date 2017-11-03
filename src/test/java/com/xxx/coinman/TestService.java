@@ -2,6 +2,7 @@ package com.xxx.coinman;
 
 import static org.junit.Assert.assertNotEquals;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ public class TestService {
 	private BittrexService bitService;
 
 	@Test
+	@Ignore
 	public void main() throws Exception {
 		// TODO Auto-generated method stub
 		Double d = bitService.getPrice("LTC", "BTC");
