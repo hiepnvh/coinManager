@@ -29,7 +29,7 @@ public class AppScheduler {
 		double feePercent = .25;
 		List<CoinBot> coinBots = coinBotRepo.findByActive(true);
 		for(CoinBot cb : coinBots){
-//			Double lastPrice = cb.getLastPrice();//Gia mua vao lan gan day nhat
+			Double lastPrice = cb.getLastPrice();//Gia mua vao lan gan day nhat
 			Double lastPriceGot = cb.getLastPriceGot();//Gia vua get duoc lan truoc do
 			Double limitBuy = (double) (cb.getBuyLimit()/100);
 			Double limitSell = (double) (cb.getSellLimit()/100);
@@ -71,8 +71,8 @@ public class AppScheduler {
 				double yourMoney = cb.getYourMoney() - round(buyableVol, 2);
 				cb.setYourMoney(yourMoney);
 				
-			}else if(currPrice*(1 + limitSell) < lastPriceGot //losing 
-//					&& currPrice*(1 + limitSell) < lastPrice 
+			}else if(currPrice*(1 + feePercent) < lastPriceGot //losing 
+					&& currPrice*(1 + limitSell) < lastPrice  //losing more than limitsell
 					&& isBought){
 				//sell then save new lastprrice
 				cb.setLastPrice(currPrice);
