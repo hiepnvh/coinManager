@@ -44,7 +44,7 @@ app.controller('AppCtrl', function($scope, $http) {
     	$http.post(url, currCB)
     	.then(function(response) {
 			alert('Saved!');
-			$scope.showCBList();
+			$scope.showCBListFunc();
         });
 //		res.success(function(data, status, headers, config) {
 //			$scope.message = data;
