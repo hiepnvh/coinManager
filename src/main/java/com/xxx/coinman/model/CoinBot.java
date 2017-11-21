@@ -43,6 +43,9 @@ public class CoinBot {
     @Column(columnDefinition="double default '0.0'")
     private Double volume ;
     
+    @Column(columnDefinition="double default '0.0'")
+    private Double yourMoney ; // your money ($) in wallet
+    
 //    @Column(columnDefinition ="int(11) default 0")
 //    private int intervalTime ;
    

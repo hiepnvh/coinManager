@@ -51,7 +51,8 @@
 					
 				    <td>{{ cb.coinCode }}</td>
 				    <td>{{ cb.volume }}</td>
-				    <td>{{ round((cb.volume*cb.lastPrice)*100/ (cb.firstVolume*cb.firstPrice) - 100)}}%</td>
+				    <td ng-if="!cb.isBought">{{ round((cb.yourMoney)*100/ (cb.firstVolume*cb.firstPrice) - 100)}}%</td>
+				    <td ng-if="cb.isBought">---(Buying)%</td>
 				</tr>
 			</table>
 			<button type="button" class="btn" ng-click="showCBDetailFunc()">Add</button>
@@ -138,7 +139,7 @@
 		var s = document.createElement("script");
 		s.type = "text/javascript";
 		s.async = true;
-		var theUrl = baseUrl+'serve/v1/coin/chart?fsym=' + currCoinCode + '&tsym=BTC&period=1M';
+		var theUrl = baseUrl+'serve/v1/coin/chart?fsym=' + currCoinCode + '&tsym=USDT&period=1M';
 		s.src = theUrl + ( theUrl.indexOf("?") >= 0 ? "&" : "?") + "app=" + appName;
 		
 		console.log(embedder.parentNode);

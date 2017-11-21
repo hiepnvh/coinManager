@@ -25,10 +25,11 @@ public class AppScheduler {
 	//run every 5 mins
 	@Scheduled(fixedRate = 5*60*1000)
 	public void getAndTrade() throws Exception{
-		String refCode = "BTC"; //chi quy doi ra btc de tinh
+		String refCode = "USDT"; //chi quy doi ra usd de tinh
+		double feePercent = .25;
 		List<CoinBot> coinBots = coinBotRepo.findByActive(true);
 		for(CoinBot cb : coinBots){
-			Double lastPrice = cb.getLastPrice();//Gia mua vao lan gan day nhat
+//			Double lastPrice = cb.getLastPrice();//Gia mua vao lan gan day nhat
 			Double lastPriceGot = cb.getLastPriceGot();//Gia vua get duoc lan truoc do
 			Double limitBuy = (double) (cb.getBuyLimit()/100);
 			Double limitSell = (double) (cb.getSellLimit()/100);
@@ -51,23 +52,36 @@ public class AppScheduler {
 				cb.setLastPriceGot(currPrice);
 				cb.setIsBought(true);
 				cb.setAction(BUY);
-			}else if(currPrice*(1 - limitBuy) > lastPriceGot //raising
-				&& currPrice*(1 + limitBuy) < lastPrice 
-				&& !isBought	){
+				//update your money
+				double yourMoney = 0;
+				cb.setYourMoney(yourMoney);
+			}else if(currPrice*(1 - limitBuy) > lastPriceGot //else, buy when begin raising
+//				&& currPrice*(1 + limitBuy) < lastPrice 
+				&& !isBought){
 				//buy then save new lastPrice
-				cb.setVolume(round(currVolume*99.75*lastPrice/currPrice, 2));//cap nhat khoi luong sau khi da mua/ban
+				Double currMoney = cb.getYourMoney();
+				Double buyableVol = round(currMoney/currPrice, 2);
+				Double fee = buyableVol*currPrice*feePercent;
+				cb.setVolume(round(buyableVol - fee, 2));//cap nhat khoi luong sau khi da mua/ban ( da tru fee)
 				cb.setLastPrice(currPrice);
 				cb.setLastPriceGot(currPrice);
 				cb.setIsBought(true);
 				cb.setAction(BUY);
+				//update your money
+				double yourMoney = cb.getYourMoney() - round(buyableVol, 2);
+				cb.setYourMoney(yourMoney);
 				
 			}else if(currPrice*(1 + limitSell) < lastPriceGot //losing 
-					&& currPrice*(1 + limitSell) < lastPrice 
+//					&& currPrice*(1 + limitSell) < lastPrice 
 					&& isBought){
 				//sell then save new lastprrice
 				cb.setLastPrice(currPrice);
 				cb.setLastPriceGot(currPrice);
-				cb.setVolume(round(currVolume*99.75*lastPrice/currPrice, 2));//cap nhat khoi luong sau khi da mua/ban
+				Double fee = currVolume*currPrice*feePercent;
+				Double currMoney = cb.getYourMoney();
+				Double yourMoney = currMoney + (currVolume*currPrice - fee);
+				cb.setYourMoney(yourMoney);
+//				cb.setVolume(round(currVolume*(1 - fee)*lastPrice/currPrice, 2));//cap nhat khoi luong sau khi da mua/ban
 				cb.setIsBought(false);
 				cb.setAction(SELL);
 			}else{
