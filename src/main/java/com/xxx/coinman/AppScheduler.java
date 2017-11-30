@@ -26,7 +26,7 @@ public class AppScheduler {
 	@Scheduled(fixedRate = 5*60*1000)
 	public void getAndTrade() throws Exception{
 		String refCode = "USDT"; //chi quy doi ra usd de tinh
-		double feePercent = .25;
+		double feePercent = .25/100; //0.25% =  bittrex fee
 		List<CoinBot> coinBots = coinBotRepo.findByActive(true);
 		for(CoinBot cb : coinBots){
 			Double lastPrice = cb.getLastPrice();//Gia mua vao lan gan day nhat
@@ -68,11 +68,11 @@ public class AppScheduler {
 				cb.setIsBought(true);
 				cb.setAction(BUY);
 				//update your money
-				double yourMoney = cb.getYourMoney() - round(buyableVol, 2);
+				double yourMoney = cb.getYourMoney() - round(buyableVol, 2)*currPrice;
 				cb.setYourMoney(yourMoney);
 				
-			}else if(currPrice*(1 + feePercent) < lastPriceGot //losing 
-					&& currPrice*(1 + limitSell) < lastPrice  //losing more than limitsell
+			}else if(currPrice < lastPriceGot //losing 
+					&& (lastPrice*(1 + limitSell) < currPrice || currPrice*(1 - feePercent) > lastPrice) //losing more than limitsell or you have benefit
 					&& isBought){
 				//sell then save new lastprrice
 				cb.setLastPrice(currPrice);

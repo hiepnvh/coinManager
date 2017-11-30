@@ -70,9 +70,9 @@
 				<input class="form-control" type="text" ng-model="currCB.platform" ng-disabled="true">
 				<label>Volume</label>
 				<input class="form-control" type="text" ng-model="currCB.volume" >
-				<label>Sell limit</label>
+				<label>Sell limit(%)</label>
 				<input class="form-control" type="text" ng-model="currCB.sellLimit" >
-				<label>Buy limit</label>
+				<label>Buy limit(%)</label>
 				<input class="form-control" type="text" ng-model="currCB.buyLimit" >
 				<label>Account name</label>
 				<input class="form-control" type="text" ng-model="currCB.accountName" ng-disabled="true">
