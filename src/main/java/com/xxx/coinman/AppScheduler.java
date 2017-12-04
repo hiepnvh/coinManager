@@ -62,7 +62,7 @@ public class AppScheduler {
 				Double currMoney = cb.getYourMoney();
 				Double buyableVol = round(currMoney/currPrice, 2);
 				Double fee = buyableVol*currPrice*feePercent;
-				cb.setVolume(round(buyableVol - fee, 2));//cap nhat khoi luong sau khi da mua/ban ( da tru fee)
+				cb.setVolume(round(buyableVol - fee/currPrice, 2));//cap nhat khoi luong sau khi da mua/ban ( da tru fee)
 				cb.setLastPrice(currPrice);
 				cb.setLastPriceGot(currPrice);
 				cb.setIsBought(true);

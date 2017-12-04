@@ -46,11 +46,13 @@
 			<table class="table">
 				<th>Coin</th>
 		        <th>Volume</th>
+		        <th>Last Price</th>
 		        <th>Profit/Loss</th>
 				<tr class="cbRow" ng-repeat="cb in coinbots" ng-click="showCBDetailFunc(cb)" onclick="changeText()">
 					
 				    <td>{{ cb.coinCode }}</td>
 				    <td>{{ cb.volume }}</td>
+				    <td>{{ cb.lastPrice}}</td>
 				    <td ng-if="!cb.isBought">{{ round((cb.yourMoney)*100/ (cb.firstVolume*cb.firstPrice) - 100)}}%</td>
 				    <td ng-if="cb.isBought">---(Buying)%</td>
 				</tr>
