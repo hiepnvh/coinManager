@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 public class BittrexServiceImpl implements BittrexService {
 	@Override
 	public Double getPrice(String coinCode, String refCode) throws Exception{
+				
 		String url = "https://bittrex.com/api/v1.1/public/getmarketsummary?market=" + refCode + "-" + coinCode;
 		
 		URL obj = new URL(url);
@@ -43,13 +44,62 @@ public class BittrexServiceImpl implements BittrexService {
 	}
     
 	@Override
-	public String buy(String coinCode, String refCode){
-		return "";
+	public String buy(String coinCode, String refCode, String apiKey, double vol, double rate) throws Exception{
+		
+		String url = "https://bittrex.com/api/v1.1/market/buylimit?apikey=" + apiKey + "&market=" + refCode + "-" + coinCode + "&quantity=" + vol + "&rate=" + rate;
+		
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		con.setRequestMethod("GET");
+
+		BufferedReader in = new BufferedReader(
+		        new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+		in.close();
+
+		JSONObject jObj = new JSONObject(response.toString());
+		String uuid = "";
+		if(jObj.get("success").toString().equals("true")){
+			JSONArray resArr = (JSONArray) jObj.get("result");
+			JSONObject res = (JSONObject) resArr.get(0);
+			uuid = res.getString("uuid");
+		}
+		
+		return uuid;
 	}
     
 	@Override
-	public String sell(String coinCode, String refCode){
-		return "";
+	public String sell(String coinCode, String refCode, String apiKey, double vol, double rate) throws Exception{
+String url = "https://bittrex.com/api/v1.1/market/selllimit?apikey=" + apiKey + "&market=" + refCode + "-" + coinCode + "&quantity=" + vol + "&rate=" + rate;
+		
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		con.setRequestMethod("GET");
+
+		BufferedReader in = new BufferedReader(
+		        new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+		in.close();
+
+		JSONObject jObj = new JSONObject(response.toString());
+		String uuid = "";
+		if(jObj.get("success").toString().equals("true")){
+			JSONArray resArr = (JSONArray) jObj.get("result");
+			JSONObject res = (JSONObject) resArr.get(0);
+			uuid = res.getString("uuid");
+		}
+		
+		return uuid;
 	}
 	
 	public static double round(double value, int places) {
