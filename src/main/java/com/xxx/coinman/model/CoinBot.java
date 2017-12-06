@@ -52,10 +52,10 @@ public class CoinBot {
     private String platform;
     
     @Column(columnDefinition ="int(11) default '0'")
-    private int sellLimit ;
+    private int minProfit ;
     
     @Column(columnDefinition ="int(11) default '0'")
-    private int buyLimit ;
+    private int maxLost ;
     
     @Column(columnDefinition="double default '0.0'")
     private Double firstPrice;
@@ -66,9 +66,9 @@ public class CoinBot {
     @Column(columnDefinition="double default '0.0'")
     private Double lastPriceGot;
     
-    private String accountName;
+    private String apiKey;
     
-    private String accountPassword;
+//    private String accountPassword;
     
     @Column(columnDefinition="boolean default '0'", nullable = false)
     private Boolean isBought = false;

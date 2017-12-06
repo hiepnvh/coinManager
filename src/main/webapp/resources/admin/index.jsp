@@ -69,17 +69,17 @@
 				<label>Coin code</label>
 				<input class="form-control" type="text" ng-model="currCB.coinCode" >
 				<label>Platform</label>
-				<input class="form-control" type="text" ng-model="currCB.platform" ng-disabled="true">
+				<input class="form-control" type="text" value="bittrex" ng-model="currCB.platform" ng-disabled="true">
 				<label>Volume</label>
 				<input class="form-control" type="text" ng-model="currCB.volume" >
-				<label>Sell limit(%)</label>
-				<input class="form-control" type="text" ng-model="currCB.sellLimit" >
-				<label>Buy limit(%)</label>
-				<input class="form-control" type="text" ng-model="currCB.buyLimit" >
-				<label>Account name</label>
-				<input class="form-control" type="text" ng-model="currCB.accountName" ng-disabled="true">
-				<label>Account password</label>
-				<input class="form-control" type="text" ng-model="currCB.accountPassword" ng-disabled="true">
+				<label>Max lost(%)</label>
+				<input class="form-control" type="text" ng-model="currCB.maxLost" >
+				<label>Min profit(%)</label>
+				<input class="form-control" type="text" ng-model="currCB.minProfit" >
+				<label>Account API Key</label>
+				<input class="form-control" type="text" ng-model="currCB.apiKey" ng-disabled="false">
+				<!-- <label>Account password</label>
+				<input class="form-control" type="text" ng-model="currCB.accountPassword" ng-disabled="true"> -->
 				<label class="switch">
 				  <input type="checkbox" ng-model="currCB.active">
 				  <span class="slider"></span>

@@ -6,9 +6,7 @@ import javax.persistence.EntityManager;
 
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
-import org.hibernate.envers.Audited;
 import org.hibernate.envers.query.AuditEntity;
-import org.hibernate.envers.query.AuditQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -55,7 +53,8 @@ public class CoinsController {
 		
     }
     
-    @RequestMapping(value = "viewlog", method = RequestMethod.GET)
+    @SuppressWarnings("unchecked")
+	@RequestMapping(value = "viewlog", method = RequestMethod.GET)
     public List<CoinBot> viewLog(@RequestParam(name = "coincode", defaultValue="") String coinCode){
     	AuditReader reader = AuditReaderFactory.get(entityManager);
     	List<CoinBot> query = reader.createQuery()
