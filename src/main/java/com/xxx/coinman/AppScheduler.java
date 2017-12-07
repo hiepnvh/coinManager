@@ -69,20 +69,20 @@ public class AppScheduler {
 				&& !isBought){
 				//buy then save new lastPrice
 				Double currMoney = cb.getYourMoney();
-				Double buyableVol = round(currMoney/currPrice, 2);
-				Double fee = buyableVol*currPrice*feePercent;
+				Double buyableVol = round(currMoney/currPrice, 5);
+				Double volAfterFee = buyableVol*(1 - feePercent);
 				
 				//place order to bittrex
 				String tradeRes = bittrexService.buy(coinCode, refCode, apiKey, currVolume, currPrice);
 				if(tradeRes != ""){
 					//success
-					cb.setVolume(round(buyableVol - fee/currPrice, 2));//cap nhat khoi luong sau khi da mua/ban ( da tru fee)
+					cb.setVolume(volAfterFee);//cap nhat khoi luong sau khi da mua/ban ( da tru fee)
 					cb.setLastPrice(currPrice);
 					
 					cb.setIsBought(true);
 					cb.setAction(BUY);
 					//update your money
-					double yourMoney = cb.getYourMoney() - round(buyableVol, 2)*currPrice;
+					double yourMoney = currMoney - buyableVol*currPrice;
 					cb.setYourMoney(yourMoney);
 				}
 				
@@ -166,16 +166,16 @@ public class AppScheduler {
 				&& !isBought){
 				//buy then save new lastPrice
 				Double currMoney = cb.getYourMoney();
-				Double buyableVol = round(currMoney/currPrice, 2);
-				Double fee = buyableVol*currPrice*feePercent;
+				Double buyableVol = round(currMoney/currPrice, 5);
+				Double volAfterFee = buyableVol*(1 - feePercent);
 				
-				cb.setVolume(round(buyableVol - fee/currPrice, 2));//cap nhat khoi luong sau khi da mua/ban ( da tru fee)
+				cb.setVolume(volAfterFee);//cap nhat khoi luong sau khi da mua/ban ( da tru fee)
 				cb.setLastPrice(currPrice);
 				
 				cb.setIsBought(true);
 				cb.setAction(BUY);
 				//update your money
-				double yourMoney = cb.getYourMoney() - round(buyableVol, 2)*currPrice;
+				double yourMoney = currMoney - buyableVol*currPrice;
 				cb.setYourMoney(yourMoney);
 				
 				cb.setLastPriceGot(currPrice);
@@ -215,7 +215,7 @@ public class AppScheduler {
 
 	    long factor = (long) Math.pow(10, places);
 	    value = value * factor;
-	    long tmp = Math.round(value);
+	    double tmp = Math.floor(value);
 	    return (double) tmp / factor;
 	}
 
