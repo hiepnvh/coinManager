@@ -89,7 +89,7 @@
 			<button type="button" class="btn" ng-click="showCBListFunc()">Back to List</button>
 		</div>
 		<!-- cb detail -->
-		<label ng-if="showCBDetail">Chart for 1 month...</label>
+		<label ng-if="showCBDetail">Chart for 1 day...</label>
 		
 		<!-- log -->
 		<div ng-if="showLog">
@@ -141,7 +141,7 @@
 		var s = document.createElement("script");
 		s.type = "text/javascript";
 		s.async = true;
-		var theUrl = baseUrl+'serve/v1/coin/chart?fsym=' + currCoinCode + '&tsym=USDT&period=1M';
+		var theUrl = baseUrl+'serve/v1/coin/chart?fsym=' + currCoinCode + '&tsym=USDT&period=1D';
 		s.src = theUrl + ( theUrl.indexOf("?") >= 0 ? "&" : "?") + "app=" + appName;
 		
 		console.log(embedder.parentNode);
