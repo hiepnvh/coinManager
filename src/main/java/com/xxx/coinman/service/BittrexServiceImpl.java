@@ -29,18 +29,18 @@ public class BittrexServiceImpl implements BittrexService {
 			response.append(inputLine);
 		}
 		in.close();
-		Double average = 0.0;
+		Double bidPrice = 0.0;
 
 		JSONObject jObj = new JSONObject(response.toString());
 		if(jObj.get("success").toString().equals("true")){
 			JSONArray resArr = (JSONArray) jObj.get("result");
 			JSONObject res = (JSONObject) resArr.get(0);
-			Double high = res.getDouble("High");
-			Double low = res.getDouble("Low");
-			average = round((low + high)/2, 4);
+//			Double high = res.getDouble("High");
+//			Double low = res.getDouble("Low");
+			bidPrice = res.getDouble("Bid");
 		}
 		
-		return average;
+		return bidPrice;
 	}
     
 	@Override

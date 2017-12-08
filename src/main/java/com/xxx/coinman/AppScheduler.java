@@ -2,6 +2,7 @@ package com.xxx.coinman;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -19,11 +20,13 @@ public class AppScheduler {
 	@Autowired
 	private CoinBotRepository coinBotRepo;
 	
+	Logger LOGGER = Logger.getLogger(AppScheduler.class);
+	
 	String BUY = "Buy";
 	String SELL = "Sell";
 	
-	//run every 10 mins
-//	@Scheduled(fixedRate = 10*60*1000)
+	//run every 30 mins
+//	@Scheduled(fixedRate = 30*60*1000)
 	public void getAndTrade() throws Exception{
 		String refCode = "USDT"; //chi quy doi ra usd de tinh
 		double feePercent = .25/100; //0.25% =  bittrex fee
@@ -41,8 +44,12 @@ public class AppScheduler {
 
 			//get
 			Double currPrice = bittrexService.getPrice(coinCode, refCode);
+			
+			//Logger
+			LOGGER.info(coinCode + " maxlost: " + maxLost + " minprofit: " + minProfit + " currPrice " + currPrice + " lastprice " + lastPrice + " lastpricegot " + lastPriceGot);
+			
 			if(currPrice == 0)
-				return;
+				continue;
 			
 			////////////////////buy
 			//check if currPrice > lastPriceGot  && currPrice > lastPrice + limitBuy && is sold
@@ -134,8 +141,8 @@ public class AppScheduler {
 		for(CoinBot cb : coinBots){
 			Double lastPrice = cb.getLastPrice();//Gia mua vao lan gan day nhat
 			Double lastPriceGot = cb.getLastPriceGot();//Gia vua get duoc lan truoc do
-			Double maxLost = (double) (cb.getMaxLost()/100);
-			Double minProfit = (double) (cb.getMinProfit()/100);
+			Double maxLost = (double) (cb.getMaxLost()*0.01);
+			Double minProfit = (double) (cb.getMinProfit()*0.01);
 			Double currVolume = cb.getVolume();
 			String coinCode = cb.getCoinCode();
 //			String apiKey = cb.getApiKey();
@@ -144,8 +151,12 @@ public class AppScheduler {
 
 			//get
 			Double currPrice = bittrexService.getPrice(coinCode, refCode);
+			
+			//Logger
+			LOGGER.info(coinCode + " maxlost: " + maxLost + " minprofit: " + minProfit + " currPrice " + currPrice + " lastprice " + lastPrice + " lastpricegot " + lastPriceGot);
+			
 			if(currPrice == 0)
-				return;
+				continue;
 			
 			////////////////////buy
 			//check if currPrice > lastPriceGot  && currPrice > lastPrice + limitBuy && is sold

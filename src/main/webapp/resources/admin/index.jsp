@@ -51,8 +51,8 @@
 				<tr class="cbRow" ng-repeat="cb in coinbots" ng-click="showCBDetailFunc(cb)" onclick="changeText()">
 					
 				    <td>{{ cb.coinCode }}</td>
-				    <td>{{ cb.volume }}</td>
-				    <td>{{ cb.lastPrice}}</td>
+				    <td>{{ round(cb.volume) }}</td>
+				    <td>{{ round(cb.lastPrice) }}</td>
 				    <td ng-if="!cb.isBought">{{ round((cb.yourMoney)*100/ (cb.firstVolume*cb.firstPrice) - 100)}}%</td>
 				    <td ng-if="cb.isBought">---(Buying)%</td>
 				</tr>
@@ -107,8 +107,8 @@
 				<tr class="cbRow" ng-repeat="log in logs" ng-if="log.action">
 					
 				    <td>{{ log.isBought==true?'Buy':'Sell' }}</td>
-				    <td>{{ log.volume }}</td>
-				    <td>{{ log.lastPrice}}</td>
+				    <td>{{ round(log.volume) }}</td>
+				    <td>{{ round(log.lastPrice) }}</td>
 				    <td>{{log.lastModDate}}</td>
 				</tr>
 			</table>
