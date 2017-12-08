@@ -41,6 +41,8 @@ public class AppScheduler {
 
 			//get
 			Double currPrice = bittrexService.getPrice(coinCode, refCode);
+			if(currPrice == 0)
+				return;
 			
 			////////////////////buy
 			//check if currPrice > lastPriceGot  && currPrice > lastPrice + limitBuy && is sold
@@ -142,6 +144,8 @@ public class AppScheduler {
 
 			//get
 			Double currPrice = bittrexService.getPrice(coinCode, refCode);
+			if(currPrice == 0)
+				return;
 			
 			////////////////////buy
 			//check if currPrice > lastPriceGot  && currPrice > lastPrice + limitBuy && is sold
