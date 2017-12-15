@@ -61,6 +61,7 @@ public class CoinsController {
     			.forRevisionsOfEntity(CoinBot.class, true, false)
     			.add(AuditEntity.property("coinCode").eq(coinCode))
     			.addOrder(AuditEntity.revisionNumber().desc())
+    			.setMaxResults(10)
     			.getResultList();
     	
     	return query;

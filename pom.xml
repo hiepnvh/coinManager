@@ -65,6 +65,7 @@
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
+            <version>8.0.47</version>
             <scope>provided</scope>
         </dependency>
 
@@ -105,17 +106,23 @@
 	        <artifactId>spring-data-envers</artifactId>
 	    </dependency>
 	    
+	    <dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-mail</artifactId>
+		    <version>1.4.3.RELEASE</version>
+		</dependency>
+	    
 	</dependencies>
 	
 	<build>
-		<finalName>coinManage</finalName>
+		<finalName>cm</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
-					<outputDirectory>E:\BuiltPrjs</outputDirectory>
+					<outputDirectory>F:\BuiltPrjs</outputDirectory>
 				</configuration>
 			</plugin>
 		</plugins>

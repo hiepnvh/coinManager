@@ -123,6 +123,11 @@ public class AppScheduler {
 				cb.setAction(null);
 			}
 			
+			if(currPrice*(1 + maxLost) < lastPrice){
+				//send mail
+				
+			}
+			
 			//save to db
 			coinBotRepo.save(cb);
 			
