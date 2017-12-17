@@ -4,7 +4,11 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import com.xxx.coinman.model.CoinBot;
@@ -19,6 +23,9 @@ public class AppScheduler {
 	
 	@Autowired
 	private CoinBotRepository coinBotRepo;
+	
+	@Autowired
+	private MailSender mailSender;
 	
 	Logger LOGGER = Logger.getLogger(AppScheduler.class);
 	
@@ -123,9 +130,22 @@ public class AppScheduler {
 				cb.setAction(null);
 			}
 			
-			if(currPrice*(1 + maxLost) < lastPrice){
-				//send mail
+			if(currPrice*(1 + maxLost) < lastPrice && isBought){ //losing more than limitsell
+				//send mail to subscriber
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 				
+				SimpleMailMessage msg = new SimpleMailMessage();
+				msg.setFrom("hiepnvh@gmail.com");
+				msg.setTo(auth.getPrincipal().toString());
+				msg.setText("Sold " + cb.getCoinCode() + " cause of over lost.");
+				
+				LOGGER.info("Sending email to " + auth.getPrincipal().toString());
+				
+				try {
+		            mailSender.send(msg);
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
 			}
 			
 			//save to db
@@ -219,6 +239,24 @@ public class AppScheduler {
 				//save last got price
 				cb.setLastPriceGot(currPrice);
 				cb.setAction(null);
+			}
+			
+			if(currPrice*(1 + maxLost) < lastPrice && isBought){ //losing more than limitsell
+				//send mail to subscriber
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				
+				SimpleMailMessage msg = new SimpleMailMessage();
+				msg.setFrom("hiepnvh@gmail.com");
+				msg.setTo(auth.getPrincipal().toString());
+				msg.setText("Sold " + cb.getCoinCode() + " cause of over lost.");
+				
+				LOGGER.info("Sending email to " + auth.getPrincipal().toString());
+				
+				try {
+		            mailSender.send(msg);
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
 			}
 			
 			//save to db

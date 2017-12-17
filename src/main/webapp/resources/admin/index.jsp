@@ -54,7 +54,7 @@
 				    <td>{{ round(cb.volume) }}</td>
 				    <td>{{ round(cb.lastPrice) }}</td>
 				    <td ng-if="!cb.isBought">{{ round((cb.yourMoney)*100/ (cb.firstVolume*cb.firstPrice) - 100)}}%</td>
-				    <td ng-if="cb.isBought">---(Buying)%</td>
+				    <td ng-if="cb.isBought">{{ round((cb.yourMoney + cb.lastPriceGot*cb.volume)*100/ (cb.firstVolume*cb.firstPrice) - 100)}}%(Buying)</td>
 				</tr>
 			</table>
 			<button type="button" class="btn" ng-click="showCBDetailFunc()">Add</button>
@@ -104,7 +104,7 @@
 		        <th>Volume</th>
 		        <th>Price</th>
 		        <th>Date</th>
-				<tr class="cbRow" ng-repeat="log in logs" ng-if="log.action">
+				<tr class="cbRow" ng-repeat="log in logs">
 					
 				    <td>{{ log.isBought==true?'Buy':'Sell' }}</td>
 				    <td>{{ round(log.volume) }}</td>

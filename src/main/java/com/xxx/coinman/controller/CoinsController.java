@@ -60,9 +60,11 @@ public class CoinsController {
     	List<CoinBot> query = reader.createQuery()
     			.forRevisionsOfEntity(CoinBot.class, true, false)
     			.add(AuditEntity.property("coinCode").eq(coinCode))
+    			.add(AuditEntity.property("action").isNotNull())
     			.addOrder(AuditEntity.revisionNumber().desc())
     			.setMaxResults(10)
     			.getResultList();
+    	
     	
     	return query;
     }
