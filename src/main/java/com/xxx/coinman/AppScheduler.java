@@ -12,8 +12,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import com.xxx.coinman.model.CoinBot;
+import com.xxx.coinman.model.User;
 import com.xxx.coinman.repository.CoinBotRepository;
 import com.xxx.coinman.service.BittrexService;
+import com.xxx.coinman.service.UserService;
 
 @Component
 public class AppScheduler {
@@ -23,6 +25,9 @@ public class AppScheduler {
 	
 	@Autowired
 	private CoinBotRepository coinBotRepo;
+	
+	@Autowired
+    private UserService userService;
 	
 	@Autowired
 	private MailSender mailSender;
@@ -133,13 +138,15 @@ public class AppScheduler {
 			if(currPrice*(1 + maxLost) < lastPrice && isBought){ //losing more than limitsell
 				//send mail to subscriber
 				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				User user = userService.findByUsername(auth.getName());
 				
 				SimpleMailMessage msg = new SimpleMailMessage();
 				msg.setFrom("hiepnvh@gmail.com");
-				msg.setTo(auth.getPrincipal().toString());
+				msg.setTo(user.getEmail());
 				msg.setText("Sold " + cb.getCoinCode() + " cause of over lost.");
+				msg.setSubject("Trading msg");
 				
-				LOGGER.info("Sending email to " + auth.getPrincipal().toString());
+				LOGGER.info("Sending email to " +user.getEmail());
 				
 				try {
 		            mailSender.send(msg);
@@ -157,8 +164,8 @@ public class AppScheduler {
 	}
 	
 	//just test, not trade actually
-	//run every 5 mins
-	@Scheduled(fixedRate = 5*60*1000)
+	//run every 30 mins
+	@Scheduled(fixedRate = 30*60*1000)
 	public void getAndTradeTest() throws Exception{
 		String refCode = "USDT"; //chi quy doi ra usd de tinh
 		double feePercent = .25/100; //0.25% =  bittrex fee
@@ -244,13 +251,15 @@ public class AppScheduler {
 			if(currPrice*(1 + maxLost) < lastPrice && isBought){ //losing more than limitsell
 				//send mail to subscriber
 				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				User user = userService.findByUsername(auth.getName());
 				
 				SimpleMailMessage msg = new SimpleMailMessage();
 				msg.setFrom("hiepnvh@gmail.com");
-				msg.setTo(auth.getPrincipal().toString());
+				msg.setTo(user.getEmail());
 				msg.setText("Sold " + cb.getCoinCode() + " cause of over lost.");
+				msg.setSubject("Trading msg");
 				
-				LOGGER.info("Sending email to " + auth.getPrincipal().toString());
+				LOGGER.info("Sending email to " +user.getEmail());
 				
 				try {
 		            mailSender.send(msg);
