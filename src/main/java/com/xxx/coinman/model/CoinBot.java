@@ -37,6 +37,8 @@ public class CoinBot {
     
     private String coinCode;
     
+    private String refCode;
+    
     @Column(columnDefinition="double default '0.0'")
     private Double firstVolume ;
     
@@ -67,6 +69,8 @@ public class CoinBot {
     private Double lastPriceGot;
     
     private String apiKey;
+    
+    private String secretKey;
     
 //    private String accountPassword;
     

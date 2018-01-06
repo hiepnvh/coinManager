@@ -109,7 +109,15 @@
 	    <dependency>
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-mail</artifactId>
-		    </dependency>
+	    </dependency>
+	    
+	    <!-- https://mvnrepository.com/artifact/com.webcerebrium/binance-api -->
+		<dependency>
+		    <groupId>com.webcerebrium</groupId>
+		    <artifactId>binance-api</artifactId>
+		    <version>1.0.7</version>
+		</dependency>
+			    
 	    
 	</dependencies>
 	

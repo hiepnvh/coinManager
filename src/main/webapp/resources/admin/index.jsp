@@ -68,8 +68,10 @@
 			<form class="form-group">
 				<label>Coin code</label>
 				<input class="form-control" type="text" ng-model="currCB.coinCode" >
+				<label>Base code</label>
+				<input class="form-control" type="text" ng-model="currCB.refCode" >
 				<label>Platform</label>
-				<input class="form-control" type="text" value="bittrex" ng-model="currCB.platform" ng-disabled="true">
+				<input class="form-control" type="text" value="binance" ng-model="currCB.platform" ng-disabled="true">
 				<label>Volume</label>
 				<input class="form-control" type="text" ng-model="currCB.volume" >
 				<label>Max lost(%)</label>
@@ -78,6 +80,8 @@
 				<input class="form-control" type="text" ng-model="currCB.minProfit" >
 				<label>Account API Key</label>
 				<input class="form-control" type="text" ng-model="currCB.apiKey" ng-disabled="false">
+				<label>Account Secret Key</label>
+				<input class="form-control" type="text" ng-model="currCB.secretKey" ng-disabled="false">
 				<!-- <label>Account password</label>
 				<input class="form-control" type="text" ng-model="currCB.accountPassword" ng-disabled="true"> -->
 				<label class="switch">
