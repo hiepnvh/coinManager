@@ -39,8 +39,9 @@ public class TestService {
 		
 //		Double c = binanceService.getAccBalance("USDT");
 //		Double d = binanceService.getPrice("LTC", "BTC");
-		String s = binanceService.getOpenOrder("BTC", "USDT", API_KEY, SECRET_KEY);
+//		String s = binanceService.getOpenOrder("BTC", "USDT", API_KEY, SECRET_KEY);
 //		assertNotEquals(0.0, d);
+		binanceService.buy("BCC", "USDT", API_KEY, SECRET_KEY, 0.01, 2500);
 	}
 
 }

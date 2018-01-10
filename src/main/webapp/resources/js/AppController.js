@@ -76,7 +76,7 @@ app.controller('AppCtrl', function($scope, $http) {
     }
     
     $scope.round = function(num){
-    	return Math.round(num * 1000) / 1000;
+    	return Math.round(num * 1000000) / 1000000;
     }
     
     $scope.loadAllCoinBots();

@@ -29,8 +29,9 @@ public class BinanceServiceImpl implements BinanceService {
 		BinanceSymbol bSymbol;
 		try {
 			bSymbol = new BinanceSymbol(symbol);
-			binanceApi.balances();
+//			binanceApi.balances();
 			Double lastPrice = binanceApi.ticker24hr(bSymbol).get("lastPrice").getAsDouble() ;
+			System.out.println(lastPrice);
 			return lastPrice;
 		} catch (BinanceApiException e) {
 			// TODO Auto-generated catch block
@@ -75,7 +76,7 @@ public class BinanceServiceImpl implements BinanceService {
 			orderPlacement.setQuantity(BigDecimal.valueOf(vol));
 //			binanceApi.createOrder(orderPlacement);
 			JsonObject res = binanceApi.createOrder(orderPlacement);
-			return res.getAsString();
+			return res.get("status").getAsString();
 		} catch (BinanceApiException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -97,7 +98,7 @@ public class BinanceServiceImpl implements BinanceService {
 			orderPlacement.setQuantity(BigDecimal.valueOf(vol));
 //			binanceApi.createOrder(orderPlacement);
 			JsonObject res = binanceApi.createOrder(orderPlacement);
-			return res.getAsString();
+			return res.get("status").getAsString();
 		} catch (BinanceApiException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

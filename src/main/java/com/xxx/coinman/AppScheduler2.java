@@ -38,15 +38,15 @@ public class AppScheduler2 {
 	String SELL = "Sell";
 	
 	//run every 5 mins
-	@Scheduled(fixedRate = 5*60*1000)
+	@Scheduled(fixedRate = 3*60*1000)
 	public void getAndTrade() throws Exception{
-		double feePercent = .05/100; //0.25% =  bittrex fee
+		double feePercent = .1/100; //0.1% =  binance fee
 		List<CoinBot> coinBots = coinBotRepo.findByActive(true);
 		for(CoinBot cb : coinBots){
 			Double lastPrice = cb.getLastPrice();//Gia mua vao lan gan day nhat
 			Double lastPriceGot = cb.getLastPriceGot();//Gia vua get duoc lan truoc do
-			Double maxLost = (double) (cb.getMaxLost()/100);
-			Double minProfit = (double) (cb.getMinProfit()/100);
+			Double maxLost = (double) (cb.getMaxLost()*0.01);
+			Double minProfit = (double) (cb.getMinProfit()*0.01);
 			Double currVolume = cb.getVolume();
 			String coinCode = cb.getCoinCode();
 			String refCode = cb.getRefCode();
@@ -99,7 +99,7 @@ public class AppScheduler2 {
 				Double volAfterFee = buyableVol*(1 - feePercent);
 				
 				//place order to bittrex
-				String tradeRes = binanceService.buy(coinCode, refCode, apiKey, secretKey, currVolume, currPrice);
+				String tradeRes = binanceService.buy(coinCode, refCode, apiKey, secretKey, buyableVol, currPrice);
 				if(tradeRes != ""){
 					//success
 					cb.setVolume(volAfterFee);//cap nhat khoi luong sau khi da mua/ban ( da tru fee)
@@ -142,8 +142,7 @@ public class AppScheduler2 {
 			
 			if(currPrice*(1 + maxLost) < lastPrice && isBought){ //losing more than limitsell
 				//send mail to subscriber
-				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-				User user = userService.findByUsername(auth.getName());
+				User user = cb.getUser();
 				
 				SimpleMailMessage msg = new SimpleMailMessage();
 				msg.setFrom("hiepnvh@gmail.com");
