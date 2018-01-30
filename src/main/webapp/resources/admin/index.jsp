@@ -74,6 +74,10 @@
 				<input class="form-control" type="text" value="binance" ng-model="currCB.platform" ng-disabled="true">
 				<label>Volume</label>
 				<input class="form-control" type="text" ng-model="currCB.volume" >
+				<label>Round to</label>
+				<input class="form-control" type="text" ng-model="currCB.roundTo" >
+				<label>Place price</label>
+				<input class="form-control" type="text" ng-model="currCB.lastPrice" >
 				<label>Max lost(%)</label>
 				<input class="form-control" type="text" ng-model="currCB.maxLost" >
 				<label>Min profit(%)</label>

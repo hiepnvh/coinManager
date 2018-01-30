@@ -38,7 +38,7 @@ public class AppScheduler2 {
 	String SELL = "Sell";
 	
 	//run every 5 mins
-	@Scheduled(fixedRate = 3*60*1000)
+	@Scheduled(fixedRate = 1*60*1000)
 	public void getAndTrade() throws Exception{
 		double feePercent = .1/100; //0.1% =  binance fee
 		List<CoinBot> coinBots = coinBotRepo.findByActive(true);
@@ -72,17 +72,22 @@ public class AppScheduler2 {
 			//check if currPrice > lastPriceGot  && currPrice > lastPrice + limitBuy && is sold
 			//if firstPrice null --> buy instantly if currPrice > lastPriceGot
 			//first time
-			if(cb.getFirstPrice() == null){
+			if(cb.getFirstPrice() == 0){
 				//buy then save new lastprice/firstprice...
 				cb.setLastPriceGot(currPrice);
 				
 				//place order to bittrex
-				String tradeRes = binanceService.buy(coinCode, refCode, apiKey, secretKey, currVolume, currPrice);
+				Double orderPrice = 0.0;
+				if(lastPrice > 0)
+					orderPrice = lastPrice;
+				else
+					orderPrice = currPrice;
+				String tradeRes = binanceService.buy(coinCode, refCode, apiKey, secretKey, currVolume, orderPrice);
 				if(tradeRes != ""){
 					//success
-					cb.setFirstPrice(currPrice);
+					cb.setFirstPrice(orderPrice);
 					cb.setFirstVolume(currVolume);
-					cb.setLastPrice(currPrice);
+					cb.setLastPrice(orderPrice);
 					cb.setIsBought(true);
 					cb.setAction(BUY);
 					//update your money
@@ -95,7 +100,7 @@ public class AppScheduler2 {
 				&& !isBought){
 				//buy then save new lastPrice
 				Double currMoney = cb.getYourMoney();
-				Double buyableVol = round(currMoney/currPrice, 5);
+				Double buyableVol = round(currMoney/currPrice, cb.getRoundTo());
 				Double volAfterFee = buyableVol*(1 - feePercent);
 				
 				//place order to bittrex

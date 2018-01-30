@@ -39,13 +39,15 @@ public class CoinBot {
     
     private String refCode;
     
-    @Column(columnDefinition="double default '0.0'")
+    @Column(columnDefinition="double default '0.0'", nullable = false)
     private Double firstVolume ;
     
-    @Column(columnDefinition="double default '0.0'")
+    @Column(columnDefinition="double default '0.0'", nullable = false)
     private Double volume ;
     
-    @Column(columnDefinition="double default '0.0'")
+    int roundTo;
+    
+    @Column(columnDefinition="double default '0.0'", nullable = false)
     private Double yourMoney ; // your money ($) in wallet
     
 //    @Column(columnDefinition ="int(11) default 0")
@@ -53,19 +55,19 @@ public class CoinBot {
    
     private String platform;
     
-    @Column(columnDefinition ="int(11) default '0'")
+    @Column(columnDefinition ="int(11) default '0'", nullable = false)
     private int minProfit ;
     
-    @Column(columnDefinition ="int(11) default '0'")
+    @Column(columnDefinition ="int(11) default '0'", nullable = false)
     private int maxLost ;
     
-    @Column(columnDefinition="double default '0.0'")
+    @Column(columnDefinition="double default '0.0'", nullable = false)
     private Double firstPrice;
     
-    @Column(columnDefinition="double default '0.0'")
+    @Column(columnDefinition="double default '0.0'", nullable = false)
     private Double lastPrice;
     
-    @Column(columnDefinition="double default '0.0'")
+    @Column(columnDefinition="double default '0.0'", nullable = false)
     private Double lastPriceGot;
     
     private String apiKey;
