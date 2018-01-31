@@ -72,7 +72,7 @@ public class AppScheduler2 {
 			//check if currPrice > lastPriceGot  && currPrice > lastPrice + limitBuy && is sold
 			//if firstPrice null --> buy instantly if currPrice > lastPriceGot
 			//first time
-			if(cb.getFirstPrice() == 0){
+			if(cb.getFirstPrice() != null){
 				//buy then save new lastprice/firstprice...
 				cb.setLastPriceGot(currPrice);
 				

@@ -40,7 +40,7 @@ public class CoinBot {
     private String refCode;
     
     @Column(columnDefinition="double default '0.0'", nullable = false)
-    private Double firstVolume ;
+    private Double firstVolume = 0.0;
     
     @Column(columnDefinition="double default '0.0'", nullable = false)
     private Double volume ;
@@ -48,7 +48,7 @@ public class CoinBot {
     int roundTo;
     
     @Column(columnDefinition="double default '0.0'", nullable = false)
-    private Double yourMoney ; // your money ($) in wallet
+    private Double yourMoney  = 0.0; // your money ($) in wallet
     
 //    @Column(columnDefinition ="int(11) default 0")
 //    private int intervalTime ;
@@ -56,19 +56,19 @@ public class CoinBot {
     private String platform;
     
     @Column(columnDefinition ="int(11) default '0'", nullable = false)
-    private int minProfit ;
+    private int minProfit  = 0;
     
     @Column(columnDefinition ="int(11) default '0'", nullable = false)
-    private int maxLost ;
+    private int maxLost  = 0;
     
-    @Column(columnDefinition="double default '0.0'", nullable = false)
+    @Column(columnDefinition="double default '0.0'")
     private Double firstPrice;
     
     @Column(columnDefinition="double default '0.0'", nullable = false)
-    private Double lastPrice;
+    private Double lastPrice = 0.0;
     
     @Column(columnDefinition="double default '0.0'", nullable = false)
-    private Double lastPriceGot;
+    private Double lastPriceGot = 0.0;
     
     private String apiKey;
     
