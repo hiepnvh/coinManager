@@ -17,9 +17,6 @@ import com.webcerebrium.binance.datatype.BinanceSymbol;
 @Service
 public class BinanceServiceImpl implements BinanceService {
 	
-//	String API_KEY = "aHKRiqeXJmm40nOqGh03evV1S6rB9Ut7M8A4OA2KCviTZcspKh0Z1ytQeRWjxS0S";
-//	String SECRET_KEY = "Q2kzxvoNmtRdXG5qED3v7xlFkYkFc0FpvfDRi6Wg02QHBd58myBdqnaNY1Uo2PO9";
-
 	@Override
 	public Double getPrice(String coinCode, String refCode) throws Exception{
 		
